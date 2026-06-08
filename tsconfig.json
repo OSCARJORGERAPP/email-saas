@@ -17,8 +17,6 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "resolveJsonModule": true,
-    "declaration": true,
-    "declarationMap": true,
     "sourceMap": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
