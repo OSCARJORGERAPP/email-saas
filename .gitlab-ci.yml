@@ -1,5 +1,8 @@
+# Templates de plataforma (modelo opt-in): los stages vienen de base.yml.
+# Esta app usa MongoDB.
 include:
-  - template: Auto-DevOps.gitlab-ci.yml
-
-variables:
-  DOCKER_DRIVER: ""
+  - project: 'internos/templates-cicd'
+    ref: main
+    file:
+      - 'templates/provision-mongo.yml'
+      - 'templates/build-deploy.yml'
