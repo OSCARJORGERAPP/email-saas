@@ -26,7 +26,7 @@ install:
 lint:
   stage: lint
   script:
-    - npm run lint
+    - npx eslint . --ext .js,.jsx,.ts,.tsx
   allow_failure: true
 
 build:
