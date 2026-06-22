@@ -72,6 +72,7 @@ export async function POST(request: NextRequest) {
     interface Client {
       _id: ObjectId;
       email: string;
+      name: string;
     }
     const clients = (await db
       .collection('clients')
@@ -103,7 +104,7 @@ export async function POST(request: NextRequest) {
     console.log(`Asunto: ${template.subject}`);
     console.log(`Clientes: ${clients.length}`);
     console.log('\nEmails enviados a:');
-    clients.forEach((client: { name: string; email: string }) => {
+    clients.forEach((client) => {
       console.log(`  ✓ ${client.name} <${client.email}>`);
     });
     console.log('='.repeat(60) + '\n');
