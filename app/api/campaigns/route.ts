@@ -78,7 +78,13 @@ export async function POST(request: NextRequest) {
       .toArray();
 
     // Simulate sending emails (in production, queue to email service)
-    const results = clients.map((client: any) => ({
+    interface ClientResult {
+      clientId: string;
+      email: string;
+      status: string;
+      timestamp: Date;
+    }
+    const results: ClientResult[] = clients.map((client: { _id: string; email: string }) => ({
       clientId: client._id,
       email: client.email,
       status: 'sent',
@@ -93,7 +99,7 @@ export async function POST(request: NextRequest) {
     console.log(`Asunto: ${template.subject}`);
     console.log(`Clientes: ${clients.length}`);
     console.log('\nEmails enviados a:');
-    clients.forEach((client: any) => {
+    clients.forEach((client: { name: string; email: string }) => {
       console.log(`  ✓ ${client.name} <${client.email}>`);
     });
     console.log('='.repeat(60) + '\n');

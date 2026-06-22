@@ -99,8 +99,18 @@ function CampaignWizard({ onComplete }: { onComplete: () => void }) {
     allClients: false,
     selectedClients: [] as string[],
   });
-  const [templates, setTemplates] = useState<any[]>([]);
-  const [clients, setClients] = useState<any[]>([]);
+  interface Template {
+    _id: string;
+    name: string;
+    subject: string;
+  }
+  interface Client {
+    _id: string;
+    name: string;
+    email: string;
+  }
+  const [templates, setTemplates] = useState<Template[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
   const [sending, setSending] = useState(false);
 
   useEffect(() => {

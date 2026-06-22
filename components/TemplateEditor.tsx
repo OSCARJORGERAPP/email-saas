@@ -25,13 +25,9 @@ export default function TemplateEditor({ template }: TemplateEditorProps) {
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    renderPreview();
-  }, [subject, handlebarsTemplate, testVariables]);
-
   const renderPreview = () => {
     try {
-      let variables = JSON.parse(testVariables);
+      const variables = JSON.parse(testVariables);
       let renderedSubject = subject;
       let renderedTemplate = handlebarsTemplate;
 
@@ -44,10 +40,14 @@ export default function TemplateEditor({ template }: TemplateEditorProps) {
 
       setPreview(renderedTemplate);
       setError('');
-    } catch (e) {
+    } catch {
       setError('Invalid JSON in test variables');
     }
   };
+
+  useEffect(() => {
+    renderPreview();
+  }, [subject, handlebarsTemplate, testVariables]);
 
   const handleSave = async () => {
     setSaving(true);
