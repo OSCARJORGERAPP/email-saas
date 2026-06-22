@@ -69,13 +69,17 @@ export async function POST(request: NextRequest) {
     }
 
     // Get client details
-    const clients = await db
+    interface Client {
+      _id: ObjectId;
+      email: string;
+    }
+    const clients = (await db
       .collection('clients')
       .find({
         _id: { $in: clientList.map((id: string) => new ObjectId(id)) },
         tenantId: payload.tenantId,
       })
-      .toArray();
+      .toArray()) as Client[];
 
     // Simulate sending emails (in production, queue to email service)
     interface ClientResult {
@@ -84,11 +88,7 @@ export async function POST(request: NextRequest) {
       status: string;
       timestamp: Date;
     }
-    interface Client {
-      _id: ObjectId;
-      email: string;
-    }
-    const results: ClientResult[] = clients.map((client: Client) => ({
+    const results: ClientResult[] = clients.map((client) => ({
       clientId: String(client._id),
       email: client.email,
       status: 'sent',
