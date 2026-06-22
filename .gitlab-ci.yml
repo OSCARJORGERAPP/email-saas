@@ -1,8 +1,49 @@
-# Templates de plataforma (modelo opt-in): los stages vienen de base.yml.
-# Esta app usa MongoDB.
-include:
-  - project: 'internos/templates-cicd'
-    ref: main
-    file:
-      - 'templates/provision-mongo.yml'
-      - 'templates/build-deploy.yml'
+stages:
+  - install
+  - lint
+  - build
+  - deploy
+
+default:
+  image: node:20
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules/
+
+variables:
+  MONGODB_URI: "mongodb://mongo:27017"
+  MONGODB_DB: "email_saas_test"
+
+install:
+  stage: install
+  script:
+    - npm ci
+  artifacts: {}
+
+lint:
+  stage: lint
+  script:
+    - npm run lint
+  allow_failure: true
+
+build:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - .next/
+    expire_in: 1 week
+
+deploy:
+  stage: deploy
+  script:
+    - echo 'TODO deployment steps'
+  environment:
+    name: production
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: never
