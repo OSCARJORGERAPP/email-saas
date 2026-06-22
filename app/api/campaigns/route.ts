@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
       status: string;
       timestamp: Date;
     }
-    const results: ClientResult[] = clients.map((client: { _id: string; email: string }) => ({
+    const results: ClientResult[] = clients.map((client: any) => ({
       clientId: client._id,
       email: client.email,
       status: 'sent',
